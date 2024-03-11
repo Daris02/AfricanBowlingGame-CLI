@@ -17,26 +17,31 @@ public class Game {
                 scoreActually = view(i, frameNumber, launchNumber, remainingQuilles, scanner, frame, scoreActually);
                 
                 allScore.add(scoreActually);
-
+                
                 if (frames.size() > 0) {
-                    List<Integer> lastFrame = frames.get((5 - frameNumber)-1);
-                    Integer lastScore = allScore.get(allScore.size()-2);
-                    if (lastFrame.contains(15)) {
-                        allScore.set(allScore.size()-2, (lastScore + frame.stream().reduce(0, Integer::sum)));
+                    Integer frameSum = frame.stream().reduce(0, Integer::sum);
+                    List<Integer> beforeFrame = frames.get((5 - frameNumber)-1);
+                    Integer beforeScore = allScore.get(allScore.size()-2);
+                    boolean beforeFrameStrike = beforeFrame.get(0) == 15 && beforeFrame.get(0) == 15;
+                    boolean beforeFrameSpareCase1 = beforeFrame.get(0) + beforeFrame.get(1) == 15;
+                    boolean beforeFrameSpareCase2 = beforeFrame.get(0) + beforeFrame.get(1) + beforeFrame.get(2) == 15;
+
+                    if (beforeFrameStrike) {
+                        allScore.set(allScore.size()-2, (beforeScore + frameSum));
                     
-                    } else if (lastFrame.get(0) != 0 && (lastFrame.get(1) == 0 || lastFrame.get(2) == 0)) {
-                        allScore.set(allScore.size()-2, (lastScore + frame.get(0) + frame.get(1)));
+                    } else if (beforeFrameSpareCase1) {
+                        allScore.set(allScore.size()-2, ((beforeScore - beforeFrame.get(0)) + frame.get(0) + frame.get(1)));
                     
-                    } else if (lastFrame.get(2) != 0 && lastFrame.stream().reduce(0, Integer::sum) == 0) {
-                        allScore.set(allScore.size()-2, (lastScore + frame.get(0) + frame.get(1)));
+                    } else if (beforeFrameSpareCase2) {
+                        allScore.set(allScore.size()-2, ((beforeScore - beforeFrame.get(0)  - beforeFrame.get(1)) + frame.get(0) + frame.get(1) + frame.get(2)));
                     
                     }
                 }
                 frames.add(frame);
                 switch (frames.size()) {
                     case 5:
-                        frameNumber = 0;
                         i++;
+                        frameNumber = 0;
                         break;
                     
                     case 6:
