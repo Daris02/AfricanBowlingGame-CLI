@@ -1,4 +1,4 @@
-# African bowling game on the command line
+# African bowling game on the command line for Code Scale Test Technique
 This project consists of a Java implementation of an African game on the command line. The rules of this game are similar to those of bowling, but with a few specific nuances.
 
 ### Game Rules
@@ -18,3 +18,8 @@ This project consists of a Java implementation of an African game on the command
 - Clone this repository
 - Open this project on of your code editor
 - launch `App.java`
+
+## How to play
+If game launch, certain value is changed : 
+- Strike is 15 : [15, 0, 0]
+- Spare is remaining quilles all done, eg: [8, 7, 0]
